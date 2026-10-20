@@ -294,5 +294,27 @@ window.VS.copy = function (text, btn) {
 })();
 </script>
 
+<canvas id="vs-snow" aria-hidden="true" style="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50"></canvas>
+<script>
+(function(){
+  var c=document.getElementById('vs-snow'); if(!c||!c.getContext) return;
+  var x=c.getContext('2d'), W=0, H=0, dpr=Math.min(window.devicePixelRatio||1,2), flakes=[];
+  var COLOR='#d6e2ee', SHADOW='rgba(40,30,20,.6)';
+  function mk(anywhere){ return {x:Math.random()*W, y:anywhere?Math.random()*H:-8, r:Math.random()*2.3+.8, s:Math.random()*.7+.35, d:Math.random()*6.28, w:Math.random()*.6+.2, o:Math.random()*.45+.5}; }
+  function size(){ W=innerWidth; H=innerHeight; c.width=W*dpr; c.height=H*dpr; x.setTransform(dpr,0,0,dpr,0,0);
+    var n=Math.round(Math.min(120, W*H/8500)); while(flakes.length<n) flakes.push(mk(true)); flakes.length=n; }
+  size(); addEventListener('resize', size);
+  var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function tick(){
+    x.clearRect(0,0,W,H); x.fillStyle=COLOR; x.shadowColor=SHADOW; x.shadowBlur=SHADOW?3:0;
+    for(var i=0;i<flakes.length;i++){ var p=flakes[i];
+      if(!still){ p.y+=p.s; p.d+=.012; p.x+=Math.sin(p.d)*p.w; }
+      if(p.y>H+8){ flakes[i]=mk(false); continue; }
+      x.globalAlpha=p.o; x.beginPath(); x.arc(p.x,p.y,p.r,0,6.283); x.fill(); }
+    if(!still) requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
 </body>
 </html>
