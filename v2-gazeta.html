@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Вечерний Слинкин</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ruslan+Display&family=Oswald:wght@500;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap">
+<style>
+/* Layout: праздничный выпуск советской газеты. Полосы, заметки об играх, прогноз погоды и отрывные объявления с телефоном. Единый вид: газетная бумага, типографская краска, красный заголовок. */
+:root{
+  --paper:#eee6d3; --paper-2:#e3d8bf; --ink:#1d1a16; --ink-2:#4a4237; --red:#c0161d; --rule:#1d1a16;
+  --mast:'Ruslan Display', 'Georgia', serif;
+  --head:'Oswald', 'Arial Narrow', sans-serif;
+  --body:'PT Serif', Georgia, serif;
+  color-scheme: light;
+}
+html{background:#cfc4ab}
+body{background:#cfc4ab;color:var(--ink);font-family:var(--body);font-size:16.5px;line-height:1.5}
+.sheet{max-width:1100px;margin:clamp(0px,3vw,32px) auto;background:var(--paper);box-shadow:0 18px 50px -20px rgba(40,30,10,.55);
+  background-image:repeating-linear-gradient(0deg, rgba(0,0,0,.012) 0 1px, transparent 1px 3px);
+  padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:20px 36px}
+.inner{max-width:1000px;margin:0 auto}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+[hidden]{display:none!important}
+
+/* masthead */
+.top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--head);font-size:12px;letter-spacing:.08em;text-transform:uppercase;border-bottom:1px solid var(--rule);padding-bottom:8px}
+.mast{text-align:center;padding-block:14px 6px}
+.mast h1{font-family:var(--mast);color:var(--red);font-size:clamp(40px,9vw,104px);line-height:.95;letter-spacing:.01em;font-weight:400}
+.mast .slogan{font-style:italic;color:var(--ink-2);margin-top:6px;font-size:15px}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:3px double var(--rule);border-bottom:1px solid var(--rule);padding-block:8px;font-family:var(--head);font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.toggle{display:inline-flex;align-items:center;gap:8px;cursor:pointer;font:inherit;background:var(--ink);color:var(--paper);border:0;padding:6px 12px}
+.toggle:focus-visible,.strip:focus-visible,.more:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+
+/* halftone photos */
+.ph{position:relative;margin:0;overflow:hidden;background:var(--paper-2)}
+.ph img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.25) brightness(1.05) sepia(.15);transition:filter .8s ease}
+.ph::after{content:"";position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(rgba(20,15,10,.32) 0.9px, transparent 1.3px);background-size:4px 4px;mix-blend-mode:multiply;transition:opacity .8s}
+body.color .ph img{filter:none}
+body.color .ph::after{opacity:0}
+figcaption{font-size:13px;font-style:italic;color:var(--ink-2);padding-top:6px}
+
+/* lead */
+.lead{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:26px;padding-block:22px;border-bottom:1px solid var(--rule)}
+.lead .ph{aspect-ratio:4/5}
+.lead .ph img{object-position:50% 20%}
+.kicker{font-family:var(--head);color:var(--red);text-transform:uppercase;letter-spacing:.1em;font-size:13px;font-weight:700}
+.lead h2{font-family:var(--head);font-weight:700;font-size:clamp(30px,4.6vw,52px);line-height:1.02;text-transform:uppercase;margin-top:8px}
+.lead .lede{font-size:19px;margin-top:14px;font-weight:700}
+.lead p+p{margin-top:12px}
+.drop::first-letter{float:left;font-family:var(--mast);color:var(--red);font-size:64px;line-height:.8;padding:6px 8px 0 0}
+.feuilleton{margin-top:18px;border:1.5px solid var(--rule);padding:14px 16px;background:rgba(255,255,255,.25)}
+.feuilleton h3{font-family:var(--head);font-size:15px;text-transform:uppercase;letter-spacing:.1em}
+.feuilleton p{font-style:italic;margin-top:6px}
+
+/* games */
+.section-title{display:flex;align-items:center;gap:14px;margin-block:26px 6px}
+.section-title h2{font-family:var(--head);text-transform:uppercase;font-size:clamp(22px,3vw,30px);letter-spacing:.04em;white-space:nowrap}
+.section-title::after{content:"";flex:1;height:3px;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
+.sub{color:var(--ink-2);font-style:italic;margin-bottom:12px}
+.news{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));column-gap:22px}
+.item{padding-block:16px;border-top:1px solid var(--rule);display:flex;flex-direction:column;gap:8px;min-width:0}
+.item .ph{aspect-ratio:16/10}
+.item.sq .ph{aspect-ratio:16/10}
+.item h3{font-family:var(--head);font-size:21px;line-height:1.1;text-transform:uppercase}
+.item .rub{font-family:var(--head);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--red)}
+.item .hook{font-weight:700}
+.item .full{color:var(--ink-2);font-size:15.5px}
+.item .tags{font-family:var(--head);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.more{align-self:flex-start;background:none;border:0;border-bottom:1.5px solid var(--red);color:var(--red);font-family:var(--head);text-transform:uppercase;letter-spacing:.08em;font-size:13px;cursor:pointer;padding:2px 0}
+
+/* bottom row */
+.bottom{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.2fr);gap:22px;margin-top:22px;border-top:3px double var(--rule);padding-top:18px}
+.box h3{font-family:var(--head);text-transform:uppercase;letter-spacing:.06em;font-size:18px;border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:10px}
+.weather{display:grid;gap:8px}
+.weather div{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dotted var(--ink-2);padding-bottom:6px}
+.weather b{font-family:var(--head);font-variant-numeric:tabular-nums;white-space:nowrap}
+ol.steps{margin:0;padding-left:20px;display:grid;gap:8px}
+.ad{border:2px solid var(--ink);padding:14px 14px 0;background:#fbf7ec;position:relative}
+.ad .big{font-family:var(--head);font-size:26px;text-transform:uppercase;line-height:1;text-align:center}
+.ad p{margin-top:8px;font-size:15px;text-align:center}
+.strips{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin-top:12px;border-top:1.5px dashed var(--ink)}
+.strip{appearance:none;border:0;border-right:1.5px dashed var(--ink);background:#fbf7ec;cursor:pointer;height:150px;padding:6px 0;display:flex;align-items:center;justify-content:center;transition:transform .6s cubic-bezier(.5,0,.7,.4),opacity .6s;transform-origin:50% 0}
+.strip:last-child{border-right:0}
+.strip span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--head);font-size:13px;letter-spacing:.04em;white-space:nowrap}
+.strip.torn{transform:translateY(40px) rotate(12deg);opacity:0;pointer-events:none}
+.note{font-size:13px;color:var(--ink-2);text-align:center;padding-block:8px;min-height:2.4em}
+.colophon{margin-top:22px;border-top:1px solid var(--rule);padding-top:8px;font-family:var(--head);font-size:12px;letter-spacing:.06em;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--ink-2)}
+
+@media (max-width:880px){
+  .lead{grid-template-columns:minmax(0,1fr)}
+  .lead .ph{aspect-ratio:1/1}
+  .news{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bottom{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){ .news{grid-template-columns:minmax(0,1fr)} .strip{height:130px} .section-title h2{white-space:normal} .bar{justify-content:center;text-align:center} }
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="sheet"><div class="inner">
+  <div class="top"><span>Праздничный выпуск</span><span>Москва · 31 декабря</span><span>Тираж: все гости</span></div>
+  <header class="mast">
+    <h1>Вечерний Слинкин</h1>
+    <p class="slogan">Ежегодное издание о том, как встретить Новый год и не заскучать</p>
+  </header>
+  <div class="bar">
+    <span>№ 2027 · Год Огненной Козы</span>
+    <button class="toggle" id="colorBtn" aria-pressed="false">Цветная вкладка: выкл.</button>
+    <span>Цена: одна улыбка</span>
+  </div>
+
+  <article class="lead">
+    <figure class="ph"><img src="v_stand.jpg" alt="Василий Слинкин в красном новогоднем костюме у ёлки"></figure>
+    <div>
+      <div class="kicker">Происшествия</div>
+      <h2>В Москве замечен ведущий в костюме со снеговиками</h2>
+      <p class="lede">Очевидцы утверждают: после его появления праздник начался на полчаса раньше запланированного.</p>
+      <p class="drop" id="about" style="margin-top:14px"></p>
+      <p id="talk"></p>
+      <div class="feuilleton"><h3>Фельетон</h3><p id="salad"></p></div>
+    </div>
+  </article>
+
+  <div class="section-title"><h2>Девять заметок о празднике</h2></div>
+  <p class="sub">Игры, которые Василий привозит на Новый год. Нажмите «Читать», чтобы развернуть заметку.</p>
+  <div class="news" id="news"></div>
+
+  <section class="bottom">
+    <div class="box">
+      <h3>Погода на 31 декабря</h3>
+      <div class="weather">
+        <div><span>В зале</span><b>+24°, ясно</b></div>
+        <div><span>К девяти вечера</span><b>смех, местами овации</b></div>
+        <div><span>К одиннадцати</span><b>порывы танцев</b></div>
+        <div><span>В полночь</span><b>салют без осадков</b></div>
+        <div><span>Бухгалтерия</span><b>тоже танцует</b></div>
+      </div>
+    </div>
+    <div class="box">
+      <h3>Читателю на заметку</h3>
+      <ol class="steps" id="steps"></ol>
+      <p style="margin-top:12px;font-style:italic" id="guests"></p>
+    </div>
+    <div class="ad">
+      <div class="big">Требуются гости</div>
+      <p>Весёлые и не очень. Опыт не нужен, Василий научит. Звоните, пока свободны даты.</p>
+      <p style="font-weight:700" id="dec"></p>
+      <div class="strips" id="strips"></div>
+      <div class="note" id="note" aria-live="polite">Оторвите листок с номером</div>
+    </div>
+  </section>
+
+  <div class="colophon"><span>Главный редактор и ведущий — Василий Слинкин</span><span id="horse"></span></div>
+</div></div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var V = window.VS;
+  ['about','talk','salad','guests','dec','horse'].forEach(function(k){
+    var el = document.getElementById(k); var src = k==='about' ? V.about : V.lines[k==='dec'?'december':k];
+    el.textContent = src;
+  });
+  var rubs = {quiz:'Наука и жизнь',s100:'Социология',spoil:'Криминальная хроника',hypno:'Культура',chbd:'Спорт',intu:'Международный отдел',neuro:'Технологии',rifmo:'Литература',koza:'Сельское хозяйство'};
+  document.getElementById('news').innerHTML = V.games.map(function(g){
+    return '<article class="item"><figure class="ph"><img src="'+g.img+'" alt="'+g.title+'" loading="lazy"></figure>'+
+      '<div class="rub">'+rubs[g.id]+'</div><h3>'+g.title+'</h3><p class="hook">'+g.hook+'</p>'+
+      '<div class="full" hidden><p>'+g.text+'</p><p class="tags" style="margin-top:8px">'+g.tags.join(' · ')+'</p></div>'+
+      '<button class="more" aria-expanded="false">Читать</button></article>';
+  }).join('');
+  document.getElementById('news').addEventListener('click', function(e){
+    var b = e.target.closest('.more'); if(!b) return;
+    var full = b.parentNode.querySelector('.full'); var open = full.hidden;
+    full.hidden = !open; b.textContent = open ? 'Свернуть' : 'Читать'; b.setAttribute('aria-expanded', open);
+  });
+  document.getElementById('steps').innerHTML = V.steps.map(function(s){ return '<li><b>'+s.t+'.</b> '+s.d+'</li>'; }).join('');
+
+  var strips = document.getElementById('strips'), note = document.getElementById('note');
+  for (var i=0;i<6;i++){
+    var val = i%2 ? V.contact.tg : V.contact.phone;
+    var b = document.createElement('button'); b.className='strip'; b.setAttribute('data-v', val);
+    b.setAttribute('aria-label','Оторвать листок: '+val);
+    b.innerHTML = '<span>'+val+'</span>'; strips.appendChild(b);
+  }
+  strips.addEventListener('click', function(e){
+    var b = e.target.closest('.strip'); if(!b) return;
+    var v = b.getAttribute('data-v'); b.classList.add('torn');
+    note.textContent = 'Листок у вас: ' + v;
+    try { navigator.clipboard.writeText(v).then(function(){ note.textContent = 'Скопировано: ' + v; }, function(){}); } catch(err){}
+    if (!strips.querySelector('.strip:not(.torn)')) setTimeout(function(){ strips.querySelectorAll('.strip').forEach(function(s){ s.classList.remove('torn'); }); note.textContent='Напечатали новые листки'; }, 900);
+  });
+  var cb = document.getElementById('colorBtn');
+  cb.addEventListener('click', function(){
+    var on = document.body.classList.toggle('color');
+    cb.textContent = 'Цветная вкладка: ' + (on ? 'вкл.' : 'выкл.'); cb.setAttribute('aria-pressed', on);
+  });
+})();
+</script>
+
+</body>
+</html>

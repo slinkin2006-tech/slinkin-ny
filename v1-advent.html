@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Двенадцать окошек Слинкина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Golos+Text:wght@400;500;600&display=swap">
+<style>
+/* Layout: адвент-календарь — 12 дверок декабря (20–31), за каждой игра или ведущий. Единый мир: клюквенный бархат, кремовые дверки, золото. */
+:root{
+  --velvet:#6e0d18; --velvet-2:#8d1422; --cream:#f7ecd6; --cream-2:#ead7b2;
+  --ink:#2a0a0f; --gold:#e0ad4c; --pine:#1d4a37; --snow:#fffaf0;
+  --display:'Unbounded', 'Arial Black', system-ui, sans-serif;
+  --body:'Golos Text', 'Segoe UI', system-ui, sans-serif;
+  color-scheme: dark;
+}
+html{background:var(--velvet)}
+body{background:var(--velvet);color:var(--snow);font-family:var(--body);font-size:16px;line-height:1.55;
+  background-image:radial-gradient(circle at 20% 10%, rgba(255,255,255,.06) 0 2px, transparent 3px),radial-gradient(circle at 70% 60%, rgba(255,255,255,.05) 0 1.5px, transparent 2.5px);
+  background-size:46px 46px, 63px 63px;}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.08}
+p{margin:0}
+[hidden]{display:none!important}
+.eyebrow{font-family:var(--display);font-weight:500;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold)}
+
+/* HERO */
+.hero{padding-block:clamp(28px,5vw,64px) 24px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:clamp(20px,4vw,56px);align-items:center}
+.hero-photo{position:relative;border-radius:200px 200px 18px 18px;overflow:hidden;aspect-ratio:4/5;max-width:100%;border:6px solid var(--gold);box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.hero-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 25%;display:block}
+.stamp{position:absolute;right:14px;bottom:14px;background:var(--cream);color:var(--velvet);font-family:var(--display);font-weight:900;font-size:13px;padding:10px 14px;border-radius:999px;transform:rotate(-6deg)}
+.hero h1{font-size:clamp(34px,6vw,72px);font-weight:900;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero .who{margin-top:18px;font-size:18px;color:var(--cream-2)}
+.hero .who b{color:var(--snow);font-weight:600}
+.quote{margin-top:22px;padding:18px 20px;background:rgba(0,0,0,.18);border-left:3px solid var(--gold);border-radius:0 12px 12px 0;font-size:17px;max-width:60ch}
+.hint{margin-top:22px;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--cream-2)}
+.hint .arrow{display:inline-block;animation:bob 1.6s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(5px)}}
+
+/* CALENDAR */
+.cal-head{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-top:40px;margin-bottom:18px}
+.cal-head h2{font-size:clamp(24px,3.4vw,38px);font-weight:700}
+.counter{font-family:var(--display);font-size:14px;color:var(--gold);font-variant-numeric:tabular-nums}
+.calendar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;padding:16px;background:var(--pine);border-radius:22px;box-shadow:inset 0 0 0 3px rgba(224,173,76,.5)}
+.slot{position:relative;aspect-ratio:1/1;perspective:1100px;border-radius:12px;max-width:100%}
+.inside{position:absolute;inset:0;border-radius:12px;overflow:hidden;background:var(--ink);display:flex;flex-direction:column;justify-content:flex-end}
+.inside img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.inside .cap{position:relative;padding:10px 12px;background:linear-gradient(transparent,rgba(20,0,5,.9) 40%);font-family:var(--display);font-size:12.5px;font-weight:700;line-height:1.2}
+.inside.textual{background:var(--cream);color:var(--velvet);padding:14px;justify-content:center;text-align:center;gap:6px}
+.inside.textual .big{font-family:var(--display);font-weight:900;font-size:clamp(15px,1.8vw,20px)}
+.door{position:absolute;inset:0;border:0;padding:0;cursor:pointer;border-radius:12px;transform-origin:left center;transition:transform .9s cubic-bezier(.3,.7,.2,1),box-shadow .3s;
+  background:var(--cream);color:var(--velvet);display:grid;place-items:center;transform-style:preserve-3d;box-shadow:0 2px 0 var(--cream-2),0 8px 18px -8px rgba(0,0,0,.6)}
+.door::before{content:"";position:absolute;inset:8px;border:1.5px dashed rgba(110,13,24,.35);border-radius:8px}
+.door .num{font-family:var(--display);font-weight:900;font-size:clamp(34px,6vw,64px);line-height:1;letter-spacing:-.04em}
+.door .mon{position:absolute;top:14px;left:0;right:0;text-align:center;font-family:var(--display);font-size:10px;letter-spacing:.2em;text-transform:uppercase;opacity:.65}
+.door .kind{position:absolute;bottom:14px;left:0;right:0;text-align:center;font-size:12px;font-weight:600;color:var(--pine)}
+.door .knob{position:absolute;right:12px;top:50%;width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 2px rgba(110,13,24,.25)}
+.door:hover{transform:rotateY(-14deg)}
+.door:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.slot.open .door{transform:rotateY(-108deg);box-shadow:none;pointer-events:none}
+.slot.open .inside{cursor:pointer}
+.slot.special .door{background:var(--gold);color:var(--velvet)}
+.slot.special .door .kind{color:var(--velvet)}
+.bow{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:44px;height:22px}
+.bow::before,.bow::after{content:"";position:absolute;top:0;width:22px;height:20px;border:5px solid var(--velvet-2);border-radius:50% 50% 50% 50%}
+.bow::before{left:-2px;transform:rotate(-20deg)} .bow::after{right:-2px;transform:rotate(20deg)}
+.reset{background:none;border:0;color:var(--cream-2);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;padding:0}
+
+/* WHY */
+.why{margin-top:72px;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center}
+.why figure{margin:0;border-radius:18px;overflow:hidden;border:4px solid var(--cream);transform:rotate(-1.2deg)}
+.why figure img{display:block;width:100%;aspect-ratio:3/2;object-fit:cover}
+.why figcaption{background:var(--cream);color:var(--ink);font-size:13px;padding:8px 12px}
+.why h2{font-size:clamp(24px,3.4vw,38px);margin-bottom:16px}
+.why .guests{font-size:17px;color:var(--cream-2);margin-bottom:22px}
+.why ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+.why li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:12px;align-items:start}
+.why li svg{margin-top:3px}
+.why li b{display:block;font-weight:600;color:var(--snow)}
+.why li span{color:var(--cream-2);font-size:15px}
+
+/* CTA */
+.cta{margin-block:72px 48px;background:var(--cream);color:var(--ink);border-radius:26px;padding:clamp(24px,4vw,48px);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;align-items:center;position:relative;overflow:hidden}
+.cta h2{font-size:clamp(24px,3.6vw,42px);color:var(--velvet)}
+.cta p{margin-top:12px;font-size:17px;max-width:46ch}
+.contacts{display:grid;gap:10px}
+.contact{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border:1.5px solid var(--cream-2);border-radius:14px;padding:12px 14px}
+.contact small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7c5b3a}
+.contact span{font-family:var(--display);font-weight:700;font-size:16px;user-select:all;word-break:break-all}
+.btn{appearance:none;border:0;cursor:pointer;font-family:var(--display);font-weight:700;font-size:13px;padding:10px 14px;border-radius:999px;background:var(--velvet);color:var(--snow);white-space:nowrap}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+footer{padding-bottom:40px;text-align:center;color:var(--cream-2);font-size:13px}
+
+/* MODAL */
+dialog{border:0;padding:0;border-radius:22px;max-width:min(720px,calc(100vw - 32px));width:100%;background:var(--cream);color:var(--ink);box-shadow:0 40px 80px rgba(0,0,0,.5)}
+dialog::backdrop{background:rgba(30,0,6,.72);backdrop-filter:blur(3px)}
+.m-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--ink)}
+.m-body{padding:22px 24px 26px;display:grid;gap:12px}
+.m-kind{font-family:var(--display);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--pine)}
+.m-body h3{font-size:clamp(22px,3vw,30px);color:var(--velvet)}
+.m-hook{font-size:18px;font-weight:600;color:var(--ink)}
+.m-text{font-size:16px;color:#4a2a2a}
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tags span{font-size:13px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--cream-2);color:var(--velvet)}
+.m-close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:var(--cream);color:var(--velvet);font-size:22px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+.m-nav{display:flex;justify-content:space-between;gap:10px;margin-top:6px}
+.m-nav button{background:none;border:1.5px solid var(--velvet);color:var(--velvet)}
+.steps{display:grid;gap:12px;counter-reset:s}
+.steps div{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:start}
+.steps i{font-style:normal;font-family:var(--display);font-weight:900;font-size:22px;color:var(--velvet)}
+
+@media (max-width:860px){
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .hero-photo{max-width:420px;width:100%;margin:0 auto;aspect-ratio:1/1;border-radius:180px 180px 18px 18px}
+  .calendar{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .why,.cta{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .calendar{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:10px}
+  .door .num{font-size:48px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="hero">
+    <div class="hero-photo"><img src="v_horse.jpg" alt="Василий Слинкин в новогоднем костюме на красной лошадке у ёлки"><div class="stamp">Новый год 2027</div></div>
+    <div>
+      <div class="eyebrow">Ведущий новогодних праздников</div>
+      <h1 style="margin-top:14px">Двенадцать окошек <em>до Нового года</em></h1>
+      <p class="who"><b>Василий Слинкин.</b> Ведущий и продюсер праздников, Москва.</p>
+      <p class="quote" id="salad"></p>
+      <p class="hint"><span class="arrow">↓</span> Открывайте окошки. За каждым — то, чем Василий удивит ваших гостей.</p>
+    </div>
+  </header>
+
+  <section aria-labelledby="calh">
+    <div class="cal-head">
+      <h2 id="calh">Декабрь Василия Слинкина</h2>
+      <div style="display:flex;gap:16px;align-items:center"><span class="counter" id="counter">Открыто 0 из 12</span><button class="reset" id="reset">закрыть все</button></div>
+    </div>
+    <div class="calendar" id="cal"></div>
+  </section>
+
+  <section class="why">
+    <figure><img src="v_crowd.jpg" alt="Василий ведёт новогоднюю вечеринку, гости в костюмах"><figcaption>Так выглядит зал минут через десять после начала.</figcaption></figure>
+    <div>
+      <div class="eyebrow">Почему Василий</div>
+      <h2 style="margin-top:10px">Хозяину праздника — отдыхать</h2>
+      <p class="guests" id="guests"></p>
+      <ul id="why"></ul>
+    </div>
+  </section>
+
+  <section class="cta" id="book">
+    <div>
+      <div class="eyebrow" style="color:var(--pine)">Окошко 31</div>
+      <h2 style="margin-top:10px">Забронируйте свою дату</h2>
+      <p id="dec"></p>
+    </div>
+    <div class="contacts" id="contacts"></div>
+  </section>
+  <footer id="horse"></footer>
+</div>
+
+<dialog id="modal" aria-labelledby="mTitle">
+  <div style="position:relative">
+    <button class="m-close" id="mClose" aria-label="Закрыть">×</button>
+    <div id="mContent"></div>
+  </div>
+</dialog>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var V = window.VS;
+  document.getElementById('salad').textContent = V.lines.salad;
+  document.getElementById('guests').textContent = V.lines.guests;
+  document.getElementById('dec').textContent = V.lines.december;
+  document.getElementById('horse').textContent = V.lines.horse;
+  document.getElementById('why').innerHTML = V.why.map(function(w){
+    return '<li><svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l2.4 6.6L21 9l-5.2 4.3L17.5 20 12 16.3 6.5 20l1.7-6.7L3 9l6.6-.4z" fill="#e0ad4c"/></svg><div><b>'+w.t+'</b><span>'+w.d+'</span></div></li>';
+  }).join('');
+  function contactsHTML(){
+    return '<div class="contact"><div><small>Телефон</small><span>'+V.contact.phone+'</span></div><button class="btn" data-copy="'+V.contact.phone+'">Копировать</button></div>'+
+           '<div class="contact"><div><small>Telegram</small><span>'+V.contact.tg+'</span></div><button class="btn" data-copy="'+V.contact.tg+'">Копировать</button></div>';
+  }
+  document.getElementById('contacts').innerHTML = contactsHTML();
+
+  var order = ['host','quiz','spoil','neuro','hypno','intu','s100','rifmo','chbd','koza','steps','book'];
+  var cal = document.getElementById('cal');
+  var opened = {};
+  try { opened = JSON.parse(localStorage.getItem('vs-advent')||'{}') || {}; } catch(e){}
+
+  order.forEach(function(id, i){
+    var day = 20 + i, g = V.byId(id), inside, kind;
+    if (g) { inside = '<div class="inside"><img src="'+g.img+'" alt="" loading="lazy"><div class="cap">'+g.title+'</div></div>'; kind = g.kind; }
+    else if (id==='host') { inside = '<div class="inside"><img src="v_mic.jpg" alt="" loading="lazy" style="object-position:50% 20%"><div class="cap">Знакомьтесь: Василий</div></div>'; kind='Ведущий'; }
+    else if (id==='steps') { inside = '<div class="inside textual"><div class="big">Как это работает</div><div style="font-size:13px">Три шага до праздника</div></div>'; kind='Три шага'; }
+    else { inside = '<div class="inside textual" style="background:var(--velvet-2);color:var(--snow)"><div class="big">31 декабря</div><div style="font-size:13px">Бронь даты</div></div>'; kind='Сюрприз'; }
+    var slot = document.createElement('div');
+    slot.className = 'slot' + (id==='book' ? ' special' : '') + (opened[id] ? ' open' : '');
+    slot.innerHTML = inside + '<button class="door" aria-label="Открыть окошко '+day+' декабря"><span class="mon">декабрь</span><span class="num">'+day+'</span><span class="kind">'+kind+'</span><span class="knob"></span>'+(id==='book'?'<span class="bow"></span>':'')+'</button>';
+    slot.querySelector('.door').addEventListener('click', function(){ openDoor(id, slot); });
+    slot.querySelector('.inside').addEventListener('click', function(){ show(id); });
+    cal.appendChild(slot);
+  });
+
+  function count(){ var n = Object.keys(opened).length; document.getElementById('counter').textContent = 'Открыто ' + n + ' из 12'; }
+  function save(){ try{ localStorage.setItem('vs-advent', JSON.stringify(opened)); }catch(e){} }
+  count();
+
+  function openDoor(id, slot){
+    slot.classList.add('open'); opened[id]=1; save(); count();
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setTimeout(function(){ show(id); }, reduce ? 0 : 700);
+  }
+  document.getElementById('reset').addEventListener('click', function(){
+    opened = {}; save(); count();
+    cal.querySelectorAll('.slot').forEach(function(s){ s.classList.remove('open'); });
+  });
+
+  var modal = document.getElementById('modal'), mc = document.getElementById('mContent');
+  function show(id){
+    var g = V.byId(id), html;
+    if (g){
+      var idx = order.indexOf(id);
+      html = '<img class="m-img" src="'+g.img+'" alt="'+g.title+'"><div class="m-body"><div class="m-kind">'+(20+idx)+' декабря · '+g.kind+'</div><h3 id="mTitle">'+g.title+'</h3><p class="m-hook">'+g.hook+'</p><p class="m-text">'+g.text+'</p><div class="tags">'+g.tags.map(function(t){return '<span>'+t+'</span>';}).join('')+'</div>'+
+        '<div class="m-nav"><button class="btn" data-next="'+id+'">Следующее окошко →</button><button class="btn" style="background:var(--velvet);color:var(--snow);border:0" data-book>Хочу эту игру</button></div></div>';
+    } else if (id==='host'){
+      html = '<img class="m-img" src="v_stand.jpg" alt="Василий Слинкин" style="object-position:50% 30%"><div class="m-body"><div class="m-kind">20 декабря · Ведущий</div><h3 id="mTitle">Василий Слинкин</h3><p class="m-hook">'+V.lines.talk+'</p><p class="m-text">'+V.about+'</p><div class="m-nav"><button class="btn" data-next="host">Следующее окошко →</button></div></div>';
+    } else if (id==='steps'){
+      html = '<div class="m-body" style="padding-top:28px"><div class="m-kind">30 декабря · Три шага</div><h3 id="mTitle">Как это работает</h3><div class="steps">'+V.steps.map(function(s,i){return '<div><i>'+(i+1)+'</i><div><b>'+s.t+'</b><p class="m-text">'+s.d+'</p></div></div>';}).join('')+'</div><div class="m-nav"><button class="btn" data-next="steps">Последнее окошко →</button></div></div>';
+    } else {
+      html = '<div class="m-body" style="padding-top:28px"><div class="m-kind">31 декабря · Главное окошко</div><h3 id="mTitle">Забронируйте дату</h3><p class="m-hook">'+V.lines.december+'</p><div class="contacts">'+contactsHTML()+'</div></div>';
+    }
+    mc.innerHTML = html;
+    if (!modal.open) modal.showModal();
+    modal.scrollTop = 0;
+  }
+  mc.addEventListener('click', function(e){
+    var c = e.target.closest('[data-copy]'); if (c){ V.copy(c.getAttribute('data-copy'), c); return; }
+    var n = e.target.closest('[data-next]');
+    if (n){ var i = order.indexOf(n.getAttribute('data-next')) + 1; var nid = order[i]; var slot = cal.children[i];
+      if (nid){ slot.classList.add('open'); opened[nid]=1; save(); count(); show(nid); } return; }
+    if (e.target.closest('[data-book]')){ modal.close(); document.getElementById('book').scrollIntoView({behavior:'smooth'}); }
+  });
+  document.getElementById('contacts').addEventListener('click', function(e){ var c = e.target.closest('[data-copy]'); if(c) V.copy(c.getAttribute('data-copy'), c); });
+  document.getElementById('mClose').addEventListener('click', function(){ modal.close(); });
+  modal.addEventListener('click', function(e){ if (e.target === modal) modal.close(); });
+})();
+</script>
+
+</body>
+</html>

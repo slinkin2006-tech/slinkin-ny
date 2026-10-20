@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Новогоднее меню Слинкина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500;1,600&family=Tenor+Sans&display=swap">
+<style>
+/* Layout: меню праздничного ресторана на скатерти. Слева карта игр по подачам (аперитив → десерт), справа «Ваш заказ», который клиент собирает сам и копирует Василию. Единый мир: тёмно-вишнёвая скатерть, шампанская бумага, золото. */
+:root{
+  --cloth:#2a0e14; --cloth-2:#3d1520; --paper:#f4ead6; --paper-2:#e7d8ba; --ink:#24161a; --ink-2:#6b5452; --gold:#b8873a; --gold-2:#e7c27a; --wine:#7d1a2c;
+  --display:'Cormorant Garamond', Georgia, serif;
+  --body:'Tenor Sans', 'Trebuchet MS', sans-serif;
+  color-scheme: dark;
+}
+html{background:var(--cloth)}
+body{background:var(--cloth);color:var(--paper);font-family:var(--body);font-size:15.5px;line-height:1.6;
+  background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.018) 0 2px, transparent 2px 14px),repeating-linear-gradient(-45deg, rgba(255,255,255,.018) 0 2px, transparent 2px 14px)}
+.wrap{max-width:1200px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 40px}
+h1,h2,h3{font-family:var(--display);font-weight:600;margin:0;line-height:1.05;text-wrap:balance}
+p{margin:0}
+[hidden]{display:none!important}
+.sc{font-size:11.5px;letter-spacing:.24em;text-transform:uppercase}
+
+/* cover */
+.cover{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:0;border-radius:6px;overflow:hidden;background:var(--paper);color:var(--ink);box-shadow:0 30px 60px -25px rgba(0,0,0,.8)}
+.cover figure{margin:0;position:relative;min-height:100%}
+.cover figure img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 18%;aspect-ratio:4/5}
+.cover .txt{padding:clamp(24px,5vw,60px);display:flex;flex-direction:column;justify-content:center;gap:16px;border-left:1px solid var(--paper-2);position:relative}
+.cover .txt::before{content:"";position:absolute;inset:14px;border:1px solid var(--gold);pointer-events:none}
+.cover .sc{color:var(--gold)}
+.cover h1{font-size:clamp(42px,6.4vw,84px);font-weight:500;font-style:italic;color:var(--wine)}
+.cover .chef{font-family:var(--display);font-size:clamp(20px,2.4vw,28px)}
+.cover .chef b{font-weight:700}
+.cover p{color:var(--ink-2);max-width:48ch}
+.orn{display:flex;align-items:center;gap:12px;color:var(--gold)}
+.orn::before,.orn::after{content:"";height:1px;flex:1;background:var(--gold);opacity:.6}
+
+/* main */
+.main{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);margin-top:36px;align-items:start}
+.menu{background:var(--paper);color:var(--ink);border-radius:6px;padding:clamp(20px,4vw,48px);box-shadow:0 30px 60px -25px rgba(0,0,0,.8)}
+.course+.course{margin-top:36px}
+.course-h{text-align:center;margin-bottom:10px}
+.course-h h2{font-size:clamp(28px,3.4vw,40px);font-style:italic;color:var(--wine);font-weight:500}
+.course-h .sc{color:var(--gold);display:block;margin-top:4px}
+.dish{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 16px;padding-block:14px;border-bottom:1px solid var(--paper-2)}
+.dish:last-child{border-bottom:0}
+.dish .name{display:flex;align-items:baseline;gap:10px;min-width:0}
+.dish h3{font-size:24px;font-weight:700}
+.dish .lead{flex:1;border-bottom:1.5px dotted var(--ink-2);transform:translateY(-6px);min-width:20px}
+.bubbles{display:inline-flex;gap:3px;align-items:center;white-space:nowrap}
+.bubbles i{width:9px;height:9px;border-radius:50%;border:1.5px solid var(--gold)}
+.bubbles i.on{background:var(--gold)}
+.dish .hook{grid-column:1/-1;font-family:var(--display);font-style:italic;font-size:19px;color:var(--ink-2);line-height:1.35}
+.dish .acts{grid-column:1/-1;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.add{appearance:none;cursor:pointer;font:inherit;font-size:13px;letter-spacing:.06em;padding:8px 14px;border-radius:999px;border:1.5px solid var(--wine);background:transparent;color:var(--wine);transition:background .2s,color .2s}
+.add[aria-pressed="true"]{background:var(--wine);color:var(--paper)}
+.more{appearance:none;cursor:pointer;font:inherit;font-size:13px;border:0;background:none;color:var(--ink-2);text-decoration:underline;text-underline-offset:3px;padding:4px 0}
+.add:focus-visible,.more:focus-visible,.btn:focus-visible,.order input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.detail{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,200px) minmax(0,1fr);gap:16px;align-items:start;background:#fbf5e8;border:1px solid var(--paper-2);border-radius:4px;padding:12px}
+.detail img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:3px;display:block}
+.detail p{font-size:14.5px;color:var(--ink)}
+.detail .tags{margin-top:8px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+.legend{margin-top:26px;text-align:center;color:var(--ink-2);font-size:13px;display:flex;justify-content:center;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* order */
+.order{position:sticky;top:calc(16px + env(safe-area-inset-top, 0px));background:#fffaf0;color:var(--ink);border-radius:4px;padding:22px 20px 18px;box-shadow:0 30px 60px -25px rgba(0,0,0,.8);font-family:var(--body)}
+.order::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px;background:linear-gradient(-45deg, transparent 6px, #fffaf0 0) 0 0/14px 10px,linear-gradient(45deg, transparent 6px, #fffaf0 0) 0 0/14px 10px}
+.order h2{font-size:28px;text-align:center;font-style:italic;font-weight:500}
+.order .sc{text-align:center;color:var(--ink-2);display:block}
+.order hr{border:0;border-top:1.5px dashed var(--ink-2);margin:14px 0}
+.lines{list-style:none;margin:0;padding:0;display:grid;gap:6px;min-height:40px}
+.lines li{display:flex;justify-content:space-between;gap:10px;font-size:14px}
+.lines li span:last-child{white-space:nowrap}
+.lines .x{appearance:none;border:0;background:none;color:var(--wine);cursor:pointer;font-size:16px;line-height:1;padding:0 2px}
+.empty{color:var(--ink-2);font-style:italic;font-size:14px}
+.total{display:flex;justify-content:space-between;gap:10px;font-size:14px;font-variant-numeric:tabular-nums}
+.verdict{font-family:var(--display);font-size:22px;font-style:italic;color:var(--wine);text-align:center;margin-top:8px;min-height:1.3em}
+.fields{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:12px}
+.fields label{display:grid;gap:4px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2)}
+.fields input{font:inherit;font-size:15px;padding:8px 10px;border:1.5px solid var(--paper-2);border-radius:4px;background:#fff;color:var(--ink);width:100%;box-sizing:border-box;min-width:0}
+.btn{appearance:none;border:0;cursor:pointer;font:inherit;font-size:14px;letter-spacing:.06em;padding:12px 16px;border-radius:999px;background:var(--wine);color:var(--paper);width:100%;margin-top:14px}
+.btn.alt{background:transparent;color:var(--wine);border:1.5px solid var(--wine);margin-top:8px}
+.contacts{margin-top:14px;display:grid;gap:6px;font-size:14px}
+.contacts div{display:flex;justify-content:space-between;gap:8px}
+.contacts b{user-select:all;word-break:break-all}
+.small{font-size:12px;color:var(--ink-2);margin-top:8px;text-align:center}
+#msg{position:absolute;left:-9999px}
+
+/* hall */
+.hall{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);margin-top:72px;align-items:center}
+.hall .pics{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.hall .pics img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:4px;display:block}
+.hall .pics img:first-child{aspect-ratio:3/4;transform:translateY(24px)}
+.hall h2{font-size:clamp(30px,4vw,48px);font-style:italic;font-weight:500;color:var(--gold-2)}
+.hall p{margin-top:14px;color:var(--paper-2);max-width:56ch}
+.service{margin-top:20px;display:grid;gap:14px}
+.service div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:baseline}
+.service i{font-style:normal;font-family:var(--display);font-size:28px;color:var(--gold-2)}
+.service b{display:block;font-weight:400;color:var(--paper)}
+.service span{color:var(--paper-2);font-size:14px}
+footer{margin-top:64px;text-align:center;color:var(--paper-2);font-family:var(--display);font-style:italic;font-size:20px}
+
+.pill{display:none}
+@media (max-width:920px){
+  .pill{display:flex;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(14px + env(safe-area-inset-bottom, 0px));z-index:20;align-items:center;gap:10px;appearance:none;border:0;cursor:pointer;font:inherit;font-size:14px;padding:12px 20px;border-radius:999px;background:var(--wine);color:var(--paper);box-shadow:0 10px 30px rgba(0,0,0,.5);white-space:nowrap}
+  .pill b{background:var(--paper);color:var(--wine);border-radius:999px;min-width:24px;height:24px;display:inline-grid;place-items:center;font-size:13px}
+  .cover,.main,.hall{grid-template-columns:minmax(0,1fr)}
+  .cover figure img{aspect-ratio:1/1}
+  .order{position:static}
+}
+@media (max-width:520px){
+  .detail{grid-template-columns:minmax(0,1fr)}
+  .dish h3{font-size:21px}
+  .fields{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <section class="cover">
+    <figure><img src="v_tux.jpg" alt="Василий Слинкин в смокинге с микрофоном"></figure>
+    <div class="txt">
+      <span class="sc">Ресторан «Новый год» · сезон 2027</span>
+      <h1>Меню праздничного вечера</h1>
+      <p class="chef">Шеф-ведущий <b>Василий Слинкин</b></p>
+      <div class="orn sc">✦</div>
+      <p id="salad"></p>
+      <p style="font-style:italic">Соберите вечер сами: отметьте игры, и справа появится ваш заказ.</p>
+    </div>
+  </section>
+
+  <div class="main">
+    <section class="menu" id="menu" aria-label="Меню игр"></section>
+    <aside class="order" id="order" aria-live="polite">
+      <span class="sc">Стол № 31</span>
+      <h2>Ваш заказ</h2>
+      <hr>
+      <ul class="lines" id="lines"></ul>
+      <hr>
+      <div class="total"><span>Игр в заказе</span><b id="cnt">0</b></div>
+      <div class="total"><span>Градус вечера</span><b id="deg">0</b></div>
+      <p class="verdict" id="verdict"></p>
+      <div class="fields">
+        <label for="fDate">Дата<input id="fDate" type="text" placeholder="например, 26.12" autocomplete="off"></label>
+        <label for="fGuests">Гостей<input id="fGuests" type="text" inputmode="numeric" placeholder="сколько" autocomplete="off"></label>
+      </div>
+      <button class="btn" id="copyOrder">Скопировать заказ для Василия</button>
+      <button class="btn alt" id="chef">Сет от шефа</button>
+      <div class="contacts" id="contacts"></div>
+      <p class="small">Отправьте скопированный заказ в Telegram или сообщением. Василий ответит и уточнит детали.</p>
+      <textarea id="msg" aria-hidden="true" tabindex="-1"></textarea>
+    </aside>
+  </div>
+
+  <section class="hall">
+    <div class="pics">
+      <img src="v_tree.jpg" alt="Новогодняя ёлка и красная лошадка в зале">
+      <img src="v_crowd.jpg" alt="Гости на новогодней вечеринке, которую ведёт Василий" style="object-position:48% 50%">
+    </div>
+    <div>
+      <span class="sc" style="color:var(--gold-2)">О шефе</span>
+      <h2 style="margin-top:10px">Подаёт праздник горячим</h2>
+      <p id="about"></p>
+      <p id="guests"></p>
+      <div class="service" id="steps"></div>
+    </div>
+  </section>
+  <footer id="dec"></footer>
+  <button class="pill" id="pill">Ваш заказ <b id="pillN">0</b></button>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var V = window.VS;
+  ['salad','guests'].forEach(function(k){ document.getElementById(k).textContent = V.lines[k]; });
+  document.getElementById('about').textContent = V.about;
+  document.getElementById('dec').textContent = V.lines.december + ' ' + V.lines.horse;
+  document.getElementById('steps').innerHTML = V.steps.map(function(s,i){ return '<div><i>'+['I','II','III'][i]+'</i><div><b>'+s.t+'</b><span>'+s.d+'</span></div></div>'; }).join('');
+  document.getElementById('contacts').innerHTML = '<div><span>Телефон</span><b>'+V.contact.phone+'</b></div><div><span>Telegram</span><b>'+V.contact.tg+'</b></div>';
+
+  var deg = {quiz:1,intu:1,koza:1,s100:2,neuro:2,rifmo:2,spoil:3,hypno:3,chbd:3};
+  var courses = [
+    {t:'Аперитив', s:'для разгона', ids:['intu','koza']},
+    {t:'Закуски', s:'музыкальные', ids:['neuro','rifmo']},
+    {t:'Горячее', s:'главные игры вечера', ids:['quiz','s100']},
+    {t:'Десерт', s:'танцы и азарт', ids:['hypno','chbd','spoil']}
+  ];
+  function bubbles(n){ var h=''; for(var i=1;i<=3;i++) h+='<i class="'+(i<=n?'on':'')+'"></i>'; return '<span class="bubbles" title="Градус веселья: '+n+' из 3" aria-label="Градус веселья '+n+' из 3">'+h+'</span>'; }
+  var menu = document.getElementById('menu');
+  menu.innerHTML = courses.map(function(c){
+    return '<div class="course"><div class="course-h"><h2>'+c.t+'</h2><span class="sc">'+c.s+'</span></div>'+
+      c.ids.map(function(id){ var g = V.byId(id);
+        return '<div class="dish" data-id="'+id+'"><div class="name"><h3>'+g.title+'</h3><span class="lead"></span></div>'+bubbles(deg[id])+
+          '<p class="hook">'+g.hook+'</p>'+
+          '<div class="detail" hidden><img src="'+g.img+'" alt="'+g.title+'" loading="lazy"><div><p>'+g.text+'</p><p class="tags">'+g.tags.join(' · ')+'</p></div></div>'+
+          '<div class="acts"><button class="add" aria-pressed="false" data-add="'+id+'">+ В заказ</button><button class="more" aria-expanded="false" data-more>Состав блюда</button></div></div>';
+      }).join('') + '</div>';
+  }).join('') + '<div class="legend">'+bubbles(3)+'<span>— градус веселья: от «умно и уютно» до «танцуют все»</span></div>';
+
+  var order = [];
+  try { order = JSON.parse(localStorage.getItem('vs-menu')||'null') || ['quiz','s100','hypno']; } catch(e){ order = ['quiz','s100','hypno']; }
+  var verdicts = ['Пока скатерть пустая', 'Лёгкий фуршет', 'Уверенное застолье', 'Гуляем до утра', 'Легенды корпоратива'];
+  function render(){
+    menu.querySelectorAll('[data-add]').forEach(function(b){ var on = order.indexOf(b.getAttribute('data-add'))>-1; b.setAttribute('aria-pressed', on); b.textContent = on ? '✓ В заказе' : '+ В заказ'; });
+    var lines = document.getElementById('lines');
+    lines.innerHTML = order.length ? order.map(function(id){ var g=V.byId(id); return '<li><span>'+g.title+'</span><span>'+bubbles(deg[id])+' <button class="x" data-rm="'+id+'" aria-label="Убрать '+g.title+'">×</button></span></li>'; }).join('') : '<li class="empty">Отметьте игры в меню</li>';
+    var d = order.reduce(function(a,id){ return a+deg[id]; },0);
+    document.getElementById('cnt').textContent = order.length; document.getElementById('pillN').textContent = order.length;
+    document.getElementById('deg').textContent = d;
+    document.getElementById('verdict').textContent = verdicts[d===0?0:d<=3?1:d<=7?2:d<=13?3:4];
+    try { localStorage.setItem('vs-menu', JSON.stringify(order)); } catch(e){}
+  }
+  menu.addEventListener('click', function(e){
+    var a = e.target.closest('[data-add]');
+    if (a){ var id=a.getAttribute('data-add'), i=order.indexOf(id); if(i>-1) order.splice(i,1); else order.push(id); render(); return; }
+    var m = e.target.closest('[data-more]');
+    if (m){ var det = m.closest('.dish').querySelector('.detail'); det.hidden = !det.hidden; m.setAttribute('aria-expanded', !det.hidden); m.textContent = det.hidden ? 'Состав блюда' : 'Свернуть'; }
+  });
+  document.getElementById('lines').addEventListener('click', function(e){ var x=e.target.closest('[data-rm]'); if(x){ order.splice(order.indexOf(x.getAttribute('data-rm')),1); render(); } });
+  document.getElementById('chef').addEventListener('click', function(){ order = ['intu','quiz','neuro','hypno','spoil']; render(); });
+  document.getElementById('copyOrder').addEventListener('click', function(){
+    var btn = this, date = document.getElementById('fDate').value.trim(), guests = document.getElementById('fGuests').value.trim();
+    var text = 'Здравствуйте, Василий! Хочу заказать новогодний вечер.\n' +
+      (date ? 'Дата: '+date+'\n' : '') + (guests ? 'Гостей: '+guests+'\n' : '') +
+      'Игры: ' + (order.length ? order.map(function(id){ return V.byId(id).title; }).join(', ') : 'на ваш выбор') + '.';
+    var ta = document.getElementById('msg'); ta.value = text;
+    function fallback(){ ta.style.position='static'; ta.style.width='100%'; ta.style.marginTop='10px'; ta.removeAttribute('aria-hidden'); ta.select(); btn.textContent='Выделено, нажмите «Копировать»'; }
+    try { navigator.clipboard.writeText(text).then(function(){ btn.textContent='Заказ скопирован'; setTimeout(function(){ btn.textContent='Скопировать заказ для Василия'; },2000); }, fallback); } catch(e){ fallback(); }
+  });
+  document.getElementById('pill').addEventListener('click', function(){ document.getElementById('order').scrollIntoView({behavior:'smooth',block:'start'}); });
+  render();
+})();
+</script>
+
+</body>
+</html>

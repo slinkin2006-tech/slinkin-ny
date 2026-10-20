@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Голубой огонёк Слинкина</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kelly+Slab&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout: ламповый телевизор «Голубой огонёк». Слева телевизор с кнопками каналов, справа программа передач на 31 декабря. Единый мир: синий эфир, ореховый корпус, кремовая программка. */
+:root{
+  --air:#0b2350; --air-2:#163a7a; --glow:#7fb4ff; --wood:#6a3a1c; --wood-2:#8b5129; --brass:#d9b36a; --cream:#f3ead8; --ink:#1b1712; --muted:#b9c7e6; --red:#d23a2e;
+  --display:'Kelly Slab', Georgia, serif;
+  --body:'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif;
+  --mono:'IBM Plex Mono', ui-monospace, monospace;
+  color-scheme: dark;
+}
+html{background:var(--air)}
+body{background:radial-gradient(900px 500px at 25% 0%, var(--air-2), var(--air) 70%), var(--air);color:var(--cream);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:28px 40px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.08;text-wrap:balance}
+p{margin:0}
+[hidden]{display:none!important}
+.lbl{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--glow)}
+
+header{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:flex-end}
+header h1{font-size:clamp(34px,6vw,70px);letter-spacing:.01em}
+header h1 span{color:var(--glow);text-shadow:0 0 24px rgba(127,180,255,.6)}
+header p{color:var(--muted);max-width:42ch;margin-top:8px}
+.onair{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:13px;letter-spacing:.1em;border:1px solid var(--red);color:#ffb3ab;padding:6px 12px;border-radius:6px}
+.onair i{width:9px;height:9px;border-radius:50%;background:var(--red);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{opacity:.3}}
+
+.studio{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(18px,3vw,36px);margin-top:26px;align-items:start}
+
+/* TV */
+.tv{background:linear-gradient(135deg,var(--wood-2),var(--wood) 55%,#4f2a13);border-radius:28px;padding:clamp(14px,2.4vw,26px);box-shadow:inset 0 2px 0 rgba(255,255,255,.15),0 30px 60px -25px rgba(0,0,0,.8);position:relative}
+.tv::before{content:"";position:absolute;inset:0;border-radius:28px;background:repeating-linear-gradient(100deg, rgba(0,0,0,.06) 0 2px, transparent 2px 9px);pointer-events:none}
+.tv-in{display:grid;grid-template-columns:minmax(0,1fr) 92px;gap:clamp(12px,2vw,20px);position:relative}
+.bezel{background:#1a1410;border-radius:30px;padding:clamp(10px,1.6vw,16px);box-shadow:inset 0 0 0 3px #3a2a1c}
+.screen{position:relative;aspect-ratio:4/3;border-radius:24px/34px;overflow:hidden;background:#0c1220;max-width:100%}
+.screen img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(1.1) contrast(1.05)}
+.screen .scan{position:absolute;inset:0;background:repeating-linear-gradient(0deg, rgba(0,0,0,.18) 0 1px, transparent 1px 3px);pointer-events:none}
+.screen .vig{position:absolute;inset:0;box-shadow:inset 0 0 70px 18px rgba(0,0,0,.75);border-radius:inherit;pointer-events:none}
+.screen .glare{position:absolute;inset:0;background:linear-gradient(130deg, rgba(255,255,255,.14), transparent 35%);pointer-events:none}
+.screen canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .15s}
+.screen.static canvas{opacity:1}
+.osd{position:absolute;top:12px;right:16px;font-family:var(--mono);font-size:clamp(16px,2.4vw,24px);color:#9dff9d;text-shadow:0 0 8px #3f3;letter-spacing:.06em}
+.ticker{position:absolute;left:0;right:0;bottom:0;background:rgba(5,15,35,.78);padding:8px 14px;font-family:var(--display);font-size:clamp(15px,2vw,20px)}
+.panel{display:flex;flex-direction:column;align-items:center;gap:10px;background:#2b1d12;border-radius:16px;padding:12px 8px;box-shadow:inset 0 0 0 2px #3f2b1a}
+.dial{width:62px;height:62px;border-radius:50%;background:conic-gradient(from 0deg,#c9a45d,#7d5f2c,#e8cf91,#7d5f2c,#c9a45d);display:grid;place-items:center;transition:transform .45s cubic-bezier(.4,1.5,.5,1)}
+.dial::after{content:"";width:6px;height:24px;border-radius:3px;background:#2b1d12;transform:translateY(-10px)}
+.keys{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;width:100%}
+.key{appearance:none;border:0;cursor:pointer;font-family:var(--mono);font-size:13px;height:30px;border-radius:6px;background:linear-gradient(#f4e7c8,#cdb98c);color:var(--ink);box-shadow:0 3px 0 #7d6a42;transition:transform .08s, box-shadow .08s}
+.key.host{grid-column:1/-1}
+.key[aria-pressed="true"]{transform:translateY(3px);box-shadow:0 0 0 #7d6a42;background:linear-gradient(#ffd77d,#e0ad4c)}
+.key:focus-visible,.prog button:focus-visible,.btn:focus-visible{outline:3px solid var(--glow);outline-offset:2px}
+.legs{display:flex;justify-content:space-between;padding-inline:14%;margin-top:-4px}
+.legs i{width:14px;height:40px;background:linear-gradient(#4f2a13,#2b170a);transform:skewX(8deg);border-radius:0 0 4px 4px}
+.legs i:last-child{transform:skewX(-8deg)}
+
+.subs{margin-top:22px;display:grid;gap:10px}
+.subs .hook{font-family:var(--display);font-size:clamp(20px,2.4vw,26px);color:var(--cream)}
+.subs .text{color:var(--muted);max-width:62ch}
+.tags{display:flex;gap:8px;flex-wrap:wrap}
+.tags span{font-family:var(--mono);font-size:12px;padding:4px 10px;border:1px solid rgba(127,180,255,.4);border-radius:4px;color:var(--glow)}
+
+/* programme */
+.prog{background:var(--cream);color:var(--ink);border-radius:6px;padding:18px 18px 12px;box-shadow:0 20px 40px -20px rgba(0,0,0,.7);transform:rotate(.6deg)}
+.prog h2{font-size:24px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+.prog .date{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:#6a5a40;margin-top:4px}
+.prog ol{list-style:none;margin:10px 0 0;padding:0}
+.prog li+li{border-top:1px dotted #9b8a6a}
+.prog button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:52px minmax(0,1fr) 22px;gap:10px;width:100%;padding:9px 4px;cursor:pointer;align-items:baseline;border-radius:4px}
+.prog button:hover{background:rgba(22,58,122,.08)}
+.prog button[aria-current="true"]{background:var(--air);color:var(--cream)}
+.prog time{font-family:var(--mono);font-variant-numeric:tabular-nums;font-size:14px}
+.prog .t{font-weight:600}
+.prog .k{display:block;font-size:12px;opacity:.7;font-weight:400}
+.prog .ch{font-family:var(--mono);font-size:12px;text-align:right;opacity:.7}
+.prog .fine{font-size:12px;color:#6a5a40;margin-top:10px;font-style:italic}
+
+/* address */
+.address{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(20px,4vw,48px);align-items:center;margin-top:84px}
+.address figure{margin:0;position:relative;border-radius:22px;overflow:hidden}
+.address img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 15%}
+.address figure::after{content:"ОБРАЩЕНИЕ";position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;background:var(--red);color:#fff;padding:4px 8px}
+.address h2{font-size:clamp(28px,4vw,46px);margin-top:8px}
+.address p{margin-top:14px;color:var(--muted);max-width:58ch}
+.address .first{color:var(--cream);font-size:19px}
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:56px}
+.why div{background:rgba(127,180,255,.07);border:1px solid rgba(127,180,255,.22);border-radius:14px;padding:16px}
+.why b{font-family:var(--display);font-weight:400;font-size:20px;display:block;margin-bottom:6px}
+.why p{color:var(--muted);font-size:15px}
+
+.call{margin-top:72px;background:var(--cream);color:var(--ink);border-radius:20px;padding:clamp(22px,4vw,44px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px;align-items:center}
+.call h2{font-size:clamp(28px,4vw,46px)}
+.call p{margin-top:10px;max-width:44ch}
+.contacts{display:grid;gap:10px}
+.contact{display:flex;justify-content:space-between;align-items:center;gap:10px;border:2px solid var(--ink);border-radius:12px;padding:10px 12px;background:#fffaf0}
+.contact small{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#6a5a40}
+.contact span{font-family:var(--display);font-size:20px;user-select:all;word-break:break-all}
+.btn{appearance:none;border:0;cursor:pointer;font-family:var(--mono);font-size:13px;padding:10px 14px;border-radius:8px;background:var(--air);color:var(--cream);white-space:nowrap}
+footer{margin-top:40px;text-align:center;color:var(--muted);font-size:13px}
+
+@media (max-width:900px){
+  .studio,.address,.call{grid-template-columns:minmax(0,1fr)}
+  .prog{transform:none}
+  .why{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:520px){
+  .tv-in{grid-template-columns:minmax(0,1fr)}
+  .panel{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .dial{width:44px;height:44px}
+  .keys{grid-template-columns:repeat(5,minmax(0,1fr));flex:1}
+  .key.host{grid-column:auto}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header>
+    <div>
+      <span class="onair"><i></i>В эфире</span>
+      <h1 style="margin-top:14px">Голубой огонёк <span>Василия Слинкина</span></h1>
+      <p>Девять каналов новогодних игр и один ведущий. Переключайте кнопками на телевизоре или по программе передач.</p>
+    </div>
+  </header>
+
+  <div class="studio">
+    <div>
+      <div class="tv">
+        <div class="tv-in">
+          <div class="bezel">
+            <div class="screen" id="screen">
+              <img id="scrImg" src="v_tux.jpg" alt="">
+              <canvas id="noise" width="160" height="120" aria-hidden="true"></canvas>
+              <div class="scan"></div><div class="glare"></div><div class="vig"></div>
+              <div class="osd" id="osd">0</div>
+              <div class="ticker" id="ticker">Ведущий Василий Слинкин</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="dial" id="dial" aria-hidden="true"></div>
+            <div class="keys" id="keys" role="group" aria-label="Каналы"></div>
+          </div>
+        </div>
+      </div>
+      <div class="legs" aria-hidden="true"><i></i><i></i></div>
+      <div class="subs" aria-live="polite">
+        <span class="lbl" id="subLbl">Канал 0 · Ведущий</span>
+        <p class="hook" id="subHook"></p>
+        <p class="text" id="subText"></p>
+        <div class="tags" id="subTags"></div>
+      </div>
+    </div>
+
+    <aside class="prog">
+      <h2>Программа передач</h2>
+      <div class="date">Четверг, 31 декабря · Ваш зал</div>
+      <ol id="prog"></ol>
+      <p class="fine">Сетка вещания примерная. Василий составит её под ваш вечер.</p>
+    </aside>
+  </div>
+
+  <section class="address">
+    <figure><img src="v_mic.jpg" alt="Василий Слинкин с микрофоном"></figure>
+    <div>
+      <span class="lbl">Новогоднее обращение ведущего</span>
+      <h2>Дорогие гости, коллеги и главный бухгалтер!</h2>
+      <p class="first" id="salad"></p>
+      <p id="about"></p>
+      <p id="talk"></p>
+    </div>
+  </section>
+
+  <section class="why" id="why"></section>
+
+  <section class="call">
+    <div>
+      <span class="lbl" style="color:var(--air)">Звонок в студию</span>
+      <h2 style="margin-top:8px">Включите Василия на свой праздник</h2>
+      <p id="dec"></p>
+    </div>
+    <div class="contacts" id="contacts"></div>
+  </section>
+  <footer id="horse"></footer>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+  var V = window.VS;
+  document.getElementById('salad').textContent = V.lines.salad;
+  document.getElementById('about').textContent = V.about;
+  document.getElementById('talk').textContent = V.lines.talk;
+  document.getElementById('dec').textContent = V.lines.december;
+  document.getElementById('horse').textContent = V.lines.horse;
+  document.getElementById('why').innerHTML = V.why.map(function(w){ return '<div><b>'+w.t+'</b><p>'+w.d+'</p></div>'; }).join('');
+  document.getElementById('contacts').innerHTML =
+    '<div class="contact"><div><small>Телефон</small><span>'+V.contact.phone+'</span></div><button class="btn" data-copy="'+V.contact.phone+'">Копировать</button></div>'+
+    '<div class="contact"><div><small>Telegram</small><span>'+V.contact.tg+'</span></div><button class="btn" data-copy="'+V.contact.tg+'">Копировать</button></div>';
+  document.getElementById('contacts').addEventListener('click', function(e){ var c=e.target.closest('[data-copy]'); if(c) V.copy(c.getAttribute('data-copy'), c); });
+
+  var channels = [{id:'host'}].concat(['quiz','s100','neuro','spoil','intu','hypno','rifmo','chbd','koza'].map(function(id){ return {id:id}; }));
+  var times = ['20:00','20:15','20:50','21:20','21:45','22:15','22:40','23:05','23:30','23:45'];
+  var keys = document.getElementById('keys'), prog = document.getElementById('prog');
+  channels.forEach(function(c,i){
+    var g = V.byId(c.id);
+    var k = document.createElement('button'); k.className='key'+(i===0?' host':''); k.textContent = i===0 ? 'ВЕДУЩИЙ' : i; k.setAttribute('data-ch', i);
+    k.setAttribute('aria-label', i===0 ? 'Канал 0: ведущий' : 'Канал '+i+': '+g.title); keys.appendChild(k);
+    var li = document.createElement('li');
+    li.innerHTML = '<button data-ch="'+i+'"><time>'+times[i]+'</time><span class="t">'+(g?g.title:'Ведущий выходит в эфир')+'<span class="k">'+(g?g.kind:'Знакомство с залом')+'</span></span><span class="ch">'+i+'</span></button>';
+    prog.appendChild(li);
+  });
+
+  var screen = document.getElementById('screen'), img = document.getElementById('scrImg'), cv = document.getElementById('noise'), ctx = cv.getContext('2d');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches, noiseRun = false;
+  function noise(){ var d = ctx.createImageData(160,120); for (var i=0;i<d.data.length;i+=4){ var v=Math.random()*255|0; d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3]=255; } ctx.putImageData(d,0,0); if(noiseRun) requestAnimationFrame(noise); }
+  var cur = -1;
+  function tune(i){
+    if (i===cur) return; cur = i;
+    var c = channels[i], g = V.byId(c.id);
+    document.getElementById('dial').style.transform = 'rotate('+(i*36)+'deg)';
+    keys.querySelectorAll('.key').forEach(function(k){ k.setAttribute('aria-pressed', k.getAttribute('data-ch')==i); });
+    prog.querySelectorAll('button').forEach(function(b){ b.setAttribute('aria-current', b.getAttribute('data-ch')==i); });
+    function swap(){
+      img.src = g ? g.img : 'v_tux.jpg';
+      img.style.objectPosition = g ? '50% 50%' : '50% 18%';
+      document.getElementById('osd').textContent = i;
+      document.getElementById('ticker').textContent = g ? g.title : 'Ведущий Василий Слинкин';
+      document.getElementById('subLbl').textContent = 'Канал '+i+' · '+(g?g.kind:'Ведущий')+' · '+times[i];
+      document.getElementById('subHook').textContent = g ? g.hook : V.lines.talk;
+      document.getElementById('subText').textContent = g ? g.text : V.lines.guests;
+      document.getElementById('subTags').innerHTML = g ? g.tags.map(function(t){return '<span>'+t+'</span>';}).join('') : '<span>начало эфира</span><span>знакомство</span>';
+    }
+    if (reduce){ swap(); return; }
+    screen.classList.add('static'); noiseRun = true; noise();
+    setTimeout(swap, 180);
+    setTimeout(function(){ screen.classList.remove('static'); noiseRun = false; }, 420);
+  }
+  keys.addEventListener('click', function(e){ var k=e.target.closest('[data-ch]'); if(k) tune(+k.getAttribute('data-ch')); });
+  prog.addEventListener('click', function(e){ var k=e.target.closest('[data-ch]'); if(k){ tune(+k.getAttribute('data-ch')); if (innerWidth<900) screen.scrollIntoView({behavior:'smooth',block:'center'}); } });
+  document.addEventListener('keydown', function(e){ if (/^[0-9]$/.test(e.key) && !e.target.closest('input,textarea')) tune(+e.key); });
+  tune(0);
+})();
+</script>
+
+</body>
+</html>

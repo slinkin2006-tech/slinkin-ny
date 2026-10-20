@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Василий Слинкин — Новый год</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700&family=Golos+Text:wght@400;600&display=swap">
+<style>
+:root{--bg:#6e0d18;--card:#f7ecd6;--ink:#2a0a0f;--gold:#e0ad4c}
+body{margin:0;background:var(--bg);color:#fffaf0;font-family:'Golos Text',system-ui,sans-serif;line-height:1.5}
+.wrap{max-width:1000px;margin:0 auto;padding:40px max(16px,env(safe-area-inset-left,0px)) 48px max(16px,env(safe-area-inset-right,0px))}
+h1{font-family:'Unbounded','Arial Black',sans-serif;font-size:clamp(28px,5vw,48px);margin:0 0 8px;line-height:1.1}
+p{margin:0 0 28px;color:#ead7b2}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
+a{display:block;background:var(--card);color:var(--ink);text-decoration:none;border-radius:16px;overflow:hidden}
+a img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+a div{padding:14px 16px}
+a b{display:block;font-family:'Unbounded',sans-serif;font-size:16px;margin-bottom:4px}
+a span{font-size:14px;color:#5a3a3a}
+a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Новогодняя программа Василия Слинкина</h1>
+<p>Пять вариантов презентации. Квизы и интерактивы на Новый год 2027.</p>
+<div class="grid">
+<a href="v1-advent.html"><img src="v_horse.jpg" alt=""><div><b>Двенадцать окошек</b><span>Адвент-календарь: открываете дверки — за ними игры</span></div></a>
+<a href="v2-gazeta.html"><img src="v_stand.jpg" alt=""><div><b>Вечерний Слинкин</b><span>Праздничный выпуск газеты с отрывными объявлениями</span></div></a>
+<a href="v3-elka.html"><img src="v_mic.jpg" alt=""><div><b>Ёлка</b><span>Каждый шар — игра, звезда — ведущий</span></div></a>
+<a href="v4-ogonek.html"><img src="v_tux.jpg" alt=""><div><b>Голубой огонёк</b><span>Игры переключаются как каналы телевизора</span></div></a>
+<a href="v5-menu.html"><img src="v_tree.jpg" alt=""><div><b>Новогоднее меню</b><span>Соберите вечер сами и отправьте заказ Василию</span></div></a>
+</div>
+</div>
+</body>
+</html>
